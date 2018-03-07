@@ -18,16 +18,21 @@ module.exports = NodeHelper.create({
 	getData: function(payload) {
 		console.log("Running MFP get data"); // for debugging
 		var self = this;
+		var resultSend = {};
 		var options = {
-		  pythonPath: '/usr/bin/python',
-		  scriptPath: '/home/pi/MagicMirror/modules/MMM-MyFitnessPal',
-		  args: [payload.user, payload.passw]
-		};
-		PythonShell.run('mfp_getdata.py', options, function (err, results) {
-		  if (err) throw err;
-		  // results is an array consisting of messages collected during execution
-		  console.log('results: %j', results);
-		  self.sendSocketNotification("MY-MFP-DATA", results);
+			mode: 'json',
+			pythonPath: '/usr/bin/python',
+			scriptPath: '/home/pi/MagicMirror/modules/MMM-MyFitnessPal',
+			args: [payload.user, payload.passw]
+		}
+		const mfpPyShell = new PythonShell('mfp_getdata.py', options);
+		mfpPyShell.on('message', function(message) { 
+				console.log(message);
+				self.sendSocketNotification('MY-MFP-DATA', message);
+		});
+		mfpPyShell.end(function (err) {
+			if (err) throw err;
+			console.log('Finished getting MFP data');
 		});
 	},
 

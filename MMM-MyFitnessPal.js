@@ -65,8 +65,8 @@ Module.register("MMM-MyFitnessPal", {
 			  dataRow.appendChild(rowData);
 			  table.appendChild(dataRow);
 			}
-		};
 		wrapper.appendChild(table);
+		};
 		return wrapper;
 	},
 	
@@ -83,9 +83,6 @@ Module.register("MMM-MyFitnessPal", {
 			console.log("Socket notification received - MFPdata");
 			this.mfpData = payload;
 			this.updateDom();
-			if (this.loaded === FALSE) {
-				this.loaded === TRUE;
-				};
 			this.scheduleUpdate(this.config.updateTime);
 		}
 	},
