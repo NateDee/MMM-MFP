@@ -9,7 +9,7 @@ Module.register("MMM-MyFitnessPal", {
 	getStyles: function() {
 		return ["font-awesome.css"];
 	},
-	
+
 	header: function() {
 		var header = document.createElement("header");
 		head.innerHTML = "MyFitnessPal Stats";
@@ -24,7 +24,6 @@ Module.register("MMM-MyFitnessPal", {
 		};
 		this.loaded = false;
 		this.getData(this); // Run initialization data get
-		this.scheduleUpdate();
 	},
 
 	getData: function(self) {
@@ -41,18 +40,19 @@ Module.register("MMM-MyFitnessPal", {
 		var table = document.createElement("table");
 		var statID = ['Fiber', 'Sodium', 'Carbs', 'Cals', 'Fat', 'Protein'];
 		console.log("Updating MFP DOM");
+		wrapper.className = "medium";
 		if (this.mfpData) {
 			var userRow = document.createElement("tr");
 			var userRowElement = document.createElement("td");
 			userRowElement.align = "middle";
-			userRowElement.colSpan = "2";
+			userRowElement.colSpan = "3";
 			userRowElement.className = "medium";
-			userRowElement.innerHTML = this.config.usernickname;
+			userRowElement.innerHTML = this.config.usernickname + "'s" + " Daily Goals";
 			userRow.appendChild(userRowElement);
 			table.appendChild(userRow);
 			
 			// Loop through python script data
-			for (i = 0, len = this.mfpData; i < len; i++) {
+			for (i = 0, len = statID.length; i < len; i++) {
 			  var dataRow = document.createElement("tr");
 			  dataRow.className = "small";
 			  dataRow.align = "left";
@@ -61,12 +61,12 @@ Module.register("MMM-MyFitnessPal", {
 			  dataRow.appendChild(rowLabel);
 			  var rowData = document.createElement("td");
 			  rowData.align = "middle";
-			  rowData.innerHTML = this.mfpData[i];
+			  rowData.innerHTML = this.mfpData[i] + " / " + this.mfpData[i+6];
 			  dataRow.appendChild(rowData);
 			  table.appendChild(dataRow);
 			}
-		wrapper.appendChild(table);
 		};
+		wrapper.appendChild(table);
 		return wrapper;
 	},
 	
@@ -80,7 +80,7 @@ Module.register("MMM-MyFitnessPal", {
 	
 	socketNotificationReceived: function (notification, payload) {
 		if (notification === "MY-MFP-DATA") {
-			console.log("Socket notification received - MFPdata");
+			Log.log("Socket notification received - MFPdata");
 			this.mfpData = payload;
 			this.updateDom();
 			this.scheduleUpdate(this.config.updateTime);

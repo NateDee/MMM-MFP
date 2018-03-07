@@ -11,11 +11,14 @@ now = datetime.datetime.now()
 client = myfitnesspal.Client(user, passwd)
 current_stats = client.get_date(now.year, now.month, now.day)
 
-#data_to_send = []
+data_to_send = []
 #fiber sodium carbs cals fat protein
-#for key in current_stats.totals:
-#	data_to_send.append(current_stats.totals[key])
+for key in current_stats.totals:
+	data_to_send.append(current_stats.totals[key])
 
-jso_data = Object(current_stats.totals)
+for key in current_stats.goals:
+	data_to_send.append(current_stats.goals[key])
 
-print(jso_data)
+#jso_data = Object(current_stats.totals)
+
+print(data_to_send)

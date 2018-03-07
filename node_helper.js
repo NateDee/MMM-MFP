@@ -1,5 +1,6 @@
-var NodeHelper = require("node_helper");
+var NodeHelper = require('node_helper');
 var PythonShell = require('python-shell');
+var colors = require('colors');
 
 module.exports = NodeHelper.create({
 	start: function() {
@@ -15,6 +16,18 @@ module.exports = NodeHelper.create({
 			}
 	},
 	
+	doData: function(data) {
+		if (data[0] > data[6]) {var fiber = true} else {var fiber = false};
+		if (message[0] > message[6]) {var sodium = true} else {var sodium = false};
+		if (message[0] > message[6]) {var carbs = true} else {var carbs = false};
+		if (message[0] > message[6]) {var cals = true} else {var cals = false};
+		if (message[0] > message[6]) {var fat = true} else {var fat = false};
+		if (message[0] > message[6]) {var protein = true} else {var protein = false};
+		// var colorsets = {fiber, sodium, carbs, cals, fat, protein};
+		console.log(fiber);
+		// self.sendSocketNotification("MY-MFP-DATA", data);
+	},
+
 	getData: function(payload) {
 		console.log("Running MFP get data"); // for debugging
 		var self = this;
@@ -28,12 +41,14 @@ module.exports = NodeHelper.create({
 		const mfpPyShell = new PythonShell('mfp_getdata.py', options);
 		mfpPyShell.on('message', function(message) { 
 				console.log(message);
-				self.sendSocketNotification('MY-MFP-DATA', message);
+				self.testvar = message;
+				self.sendSocketNotification("MY-MFP-DATA", message);
 		});
 		mfpPyShell.end(function (err) {
 			if (err) throw err;
 			console.log('Finished getting MFP data');
 		});
+		// doData(self.testvar);
 	},
 
 
