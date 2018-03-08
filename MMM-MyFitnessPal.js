@@ -7,7 +7,7 @@ Module.register("MMM-MyFitnessPal", {
 	},
 	
 	getStyles: function() {
-		return ["font-awesome.css"];
+		return ["mfp.css"];
 	},
 
 	header: function() {
@@ -39,6 +39,16 @@ Module.register("MMM-MyFitnessPal", {
 		wrapper = document.createElement("div");
 		var table = document.createElement("table");
 		var statID = ['Fiber', 'Sodium', 'Carbs', 'Cals', 'Fat', 'Protein'];
+		// Process stats for colors:
+		var colorsets = [];
+		if (this.mfpData) {
+			if (this.mfpData[0] >= this.mfpData[6]) {colorsets.push(true);} else {colorsets.push(false)};
+			if (this.mfpData[1] <= this.mfpData[7]) {colorsets.push(true);} else {colorsets.push(false)};
+			if (this.mfpData[2] <= this.mfpData[8]) {colorsets.push(true);} else {colorsets.push(false)};
+			if (this.mfpData[3] <= this.mfpData[9]) {colorsets.push(true);} else {colorsets.push(false)};
+			if (this.mfpData[4] <= this.mfpData[10]) {colorsets.push(true);} else {colorsets.push(false)};
+			if (this.mfpData[5] >= this.mfpData[11]) {colorests.push(true);} else {colorsets.push(false)};
+		};
 		console.log("Updating MFP DOM");
 		wrapper.className = "medium";
 		if (this.mfpData) {
@@ -61,6 +71,9 @@ Module.register("MMM-MyFitnessPal", {
 			  dataRow.appendChild(rowLabel);
 			  var rowData = document.createElement("td");
 			  rowData.align = "middle";
+			  if (colorsets[i]) {
+				rowData.classList.add("small", "safe");
+			  } else {rowData.classList.add("small", "exceed");};
 			  rowData.innerHTML = this.mfpData[i] + " / " + this.mfpData[i+6];
 			  dataRow.appendChild(rowData);
 			  table.appendChild(dataRow);

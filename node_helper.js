@@ -13,19 +13,8 @@ module.exports = NodeHelper.create({
 			self.config = payload;
 			self.getData(payload);
 			console.log("GOT notify in node_helper");
+			console.log(process.cwd());
 			}
-	},
-	
-	doData: function(data) {
-		if (data[0] > data[6]) {var fiber = true} else {var fiber = false};
-		if (message[0] > message[6]) {var sodium = true} else {var sodium = false};
-		if (message[0] > message[6]) {var carbs = true} else {var carbs = false};
-		if (message[0] > message[6]) {var cals = true} else {var cals = false};
-		if (message[0] > message[6]) {var fat = true} else {var fat = false};
-		if (message[0] > message[6]) {var protein = true} else {var protein = false};
-		// var colorsets = {fiber, sodium, carbs, cals, fat, protein};
-		console.log(fiber);
-		// self.sendSocketNotification("MY-MFP-DATA", data);
 	},
 
 	getData: function(payload) {
@@ -35,7 +24,8 @@ module.exports = NodeHelper.create({
 		var options = {
 			mode: 'json',
 			pythonPath: '/usr/bin/python',
-			scriptPath: '/home/pi/MagicMirror/modules/MMM-MyFitnessPal',
+			scriptPath: './modules/MMM-MyFitnessPal/python',
+			// scriptPath: '/home/pi/MagicMirror/modules/MMM-MyFitnessPal',
 			args: [payload.user, payload.passw]
 		}
 		const mfpPyShell = new PythonShell('mfp_getdata.py', options);
@@ -48,7 +38,6 @@ module.exports = NodeHelper.create({
 			if (err) throw err;
 			console.log('Finished getting MFP data');
 		});
-		// doData(self.testvar);
 	},
 
 
