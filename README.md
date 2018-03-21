@@ -1,7 +1,7 @@
 # MMM-MFP
 MyFitnessPal MagicMirror module
 
-This [MagicMirror Module[mm] is designed to display your personal MyFitnessPal data.  Since MyFitnessPal API is not really public at this point, this module uses a python script to grab your data and passes to the node.js module.
+This [MagicMirror Module][mm] is designed to display your personal MyFitnessPal data.  Since MyFitnessPal API is not really public at this point, this module uses a python script to grab your data and passes to the node.js module.
 
 ## Installation
 
