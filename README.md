@@ -24,7 +24,7 @@ To use this module, add it to the modules array in your config.js file.
 modules: [
      {
       username: "yourMFPlogin",
-      passwd: "yourMFPpassword,
+      passwd: "yourMFPpassword",
       updateTime: 60 * 1000 * 5, // Run every 5 minutes by default
       usernickname: "Nate",
 	   },
